@@ -1,6 +1,5 @@
 <?php
 
-
   error_reporting(E_ALL);
   ini_set("display_errors", 1);
 
@@ -12,5 +11,4 @@
       define('PATH', 'localhost/OCR/P5');
   }
 
-  $route = new Library\Router();
-  $ctrl = Library\Factory::follow($route);
+  dump($_SERVER);
