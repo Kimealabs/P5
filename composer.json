@@ -1,0 +1,21 @@
+{
+    "name": "kimealabs/p5",
+    "description": "Projet P5 - OCR",
+    "authors": [
+        {
+            "name": "Patrick Raspino",
+            "email": "patrick.raspino@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Library\\":"library/",
+            "Controllers\\":"controllers/",
+            "Entities\\":"entities/",
+            "Managers\\":"managers/"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.4"
+    }
+}
