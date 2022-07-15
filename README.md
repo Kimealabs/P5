@@ -3,4 +3,4 @@
 ##NOW, JUST INIT THIS !
 
 ###:-) :-) :-)
-### trying connect atom.io !!!
+### WAITING MODE !!! MY CODE SHAKE
