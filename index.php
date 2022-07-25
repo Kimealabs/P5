@@ -9,7 +9,7 @@
 
   if (!defined('PATH')) {
 
-      define('PATH', 'https://www.kimealabs.xyz/OCR/P5');
+      define('PATH', 'localhost');
 
   }
 
