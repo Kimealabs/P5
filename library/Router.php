@@ -9,11 +9,12 @@
 
     public function __construct() {
       $route = ['index', 'default'];
-      if (isset($_GET['route']) && $_GET['route'] != '') $route = explode('/', filter_var($_GET['route'], FILTER_SANITIZE_URL));
-      $this->controller = ($route[0] != '') ? $route[0] : 'index';
-      $this->action = isset($route[1]) ? $route[1] : 'default';
-      $this->params['get'] = isset($route[2]) ? (int) $route[2] : '';
-      $this->params['post'] = isset($_POST) ? $_POST : [];
+      $url = filter_var($_GET['route'], FILTER_SANITIZE_URL);
+      if (isset($url) && $url != '') $route = explode('/', $url);
+      $this->controller = ($route[0] != '') ? filter_var($route[0], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : 'index';
+      $this->action = isset($route[1]) ? filter_var($route[1], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : 'default';
+      $this->params['get'] = isset($route[2]) ? filter_var($route[2], FILTER_SANITIZE_NUMBER_INT) : '';
+      $this->params['post'] = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     public function getController() {
