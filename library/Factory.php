@@ -4,22 +4,21 @@
 
   class Factory {
 
-    static function follow(Router $route) {
+    public function __construct(Router $route) {
       $controller = ucfirst(strtolower($route->getController()));
       $classController = 'Controllers\\'.$controller."Controller";
       if (class_exists($classController)) {
-        $control = new $classController;
+        $controllerView = new $classController($route);
       }
 
       if (method_exists($classController, $route->getAction()) ) {
         $action = $route->getAction();
-        $control->$action($route);
+        $controllerView->$action();
       }
       else {
         $noWhere = new Controllers\Code404Controller();
-        $noWhere->default($route);
+        $noWhere->default();
         exit;
       }
     }
   }
-

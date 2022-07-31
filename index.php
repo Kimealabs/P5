@@ -14,5 +14,4 @@
   }
 
   $route = new Library\Router();
-
-  $ctrl = Library\Factory::follow($route);
+  $ctrl = new Library\Factory($route);
