@@ -1,15 +1,11 @@
-<?
+<?php
   namespace Controllers;
 
-  class IndexController {
+  use Library;
 
-    protected $route;
-
-    public function construct(Router $route) {
-      $this->route = $route;
-    }
+  class IndexController extends Library\View {
 
     public function default() {
-      echo "Welcome on Homepage !";
+      $this->render('home', 'std');
     }
   }
