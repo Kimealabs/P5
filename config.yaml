@@ -1,0 +1,15 @@
+projet: P5-Blog-OCR
+author: kimealabs
+email: 'kimealabs@gmail.com'
+env: 'dev'
+path: 'https://localhost/P5/P5'
+socialNetworks:
+  facebook: 'https://fr-fr.facebook.com/zuck'
+  twitter: 'https://twitter.com/elonmusk'
+  github: 'https://github.com/Kimealabs/P5'
+database:
+  driver: 'mysql'
+  user: 'root'
+  password: ''
+  db_name: 'p5'
+  host:  'localhost'

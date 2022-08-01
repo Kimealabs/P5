@@ -1,16 +1,15 @@
-<?
+<?php
+
   namespace Controllers;
 
-  class Code404Controller {
+  use Library;
 
-    protected $route;
-
-    public function construct(Router $route) {
-      $this->route = $route;
-    }
+  class Code404Controller extends Library\View {
 
     public function default() {
-        echo "404";
-    }
+      $this->setData('route', $this->route);
+      $this->render('code404', 'std');
+
+  }
   }
 
