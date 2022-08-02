@@ -15,7 +15,7 @@
       $this->controller = ($route[0] != '') ? filter_var($route[0], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : 'index';
       $this->action = isset($route[1]) ? filter_var($route[1], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : 'default';
       $this->params['get'] = isset($route[2]) ? filter_var($route[2], FILTER_SANITIZE_NUMBER_INT) : '';
-      $this->params['post'] = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->params['post'] = ($_POST) ? filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : [];
     }
 
     public function getController() {
