@@ -2,7 +2,7 @@ projet: P5-Blog-OCR
 author: kimealabs
 email: 'kimealabs@gmail.com'
 env: 'dev'
-path: 'https://localhost/P5/P5'
+path: 'https://localhost/'
 socialNetworks:
   facebook: 'https://fr-fr.facebook.com/zuck'
   twitter: 'https://twitter.com/elonmusk'
