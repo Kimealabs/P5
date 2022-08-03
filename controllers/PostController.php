@@ -16,7 +16,7 @@
       if (isset($params['get']) && $params['get'] > 0) {
         $post = $postManager->get((int) $params['get']);
         if (!$post) {
-          $route->redirect('404');
+          $this->route->redirect('404');
         }
         $this->setData('post', $post);
         $this->session->set('blogpost', $params['get']);
@@ -25,14 +25,17 @@
         $this->setData('userManager', $userManager);
         $this->render('post', 'std');
       }
+      else {
+        $this->route->redirect('404');
+      }
     }
 
     public function addComment() {
       if ($this->session->get('login')) {
         $params = $this->route->getParams();
         $commentEntity = new Entities\Comment($params['post']);
-        $commentEntity->setUser($this->session->get('login'));
-        $commentEntity->setBlogpost($this->session->get('blogpost'));
+        $commentEntity->setUserId($this->session->get('login'));
+        $commentEntity->setPostId($this->session->get('blogpost'));
         $commentManager = new Managers\CommentManager();
         $commentManager->create($commentEntity);
         $this->route->redirect('post/id/'.$this->session->get('blogpost'));
