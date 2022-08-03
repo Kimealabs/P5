@@ -24,7 +24,7 @@
 
     public function create(User $user) {
       $password = password_hash($user->getPassword(), PASSWORD_BCRYPT);
-      $req = $this->db->prepare("INSERT INTO User (name, email, password, level, status) VALUES (:name, :email, :password, 0, 0)");
+      $req = $this->db->prepare("INSERT INTO User (name, email, password, level) VALUES (:name, :email, :password, 0)");
       $req->bindValue(":name", $user->getName());
       $req->bindValue(":email", $user->getEmail());
       $req->bindValue(":password", $password);
@@ -35,12 +35,12 @@
       if ($data['password']) {
         $user->setPassword(password_hash($data['password'], PASSWORD_BCRYPT));
       }
-      $req = $this->db->prepare("UPDATE User SET name = :name, email = :email, password = :password, status = :status WHERE id = :id");
+      $req = $this->db->prepare("UPDATE User SET name = :name, email = :email, password = :password, level = :level WHERE id = :id");
       $req->bindValue(":id", $user->getId());
       $req->bindValue(":name", $user->getName());
       $req->bindValue(":email", $user->getEmail());
       $req->bindValue(":password", $user->getPassword());
-      $req->bindValue(":status", $user->getStatus());
+      $req->bindValue(":level", $user->getLevel());
       $req->execute();
     }
 
@@ -60,7 +60,7 @@
       $req->execute();
       $req->setFetchMode(\PDO::FETCH_ASSOC);
       $userManager = $req->fetch();
-      $user = ($userManger)? new User($userManger) : false;
+      $user = ($userManager)? new User($userManager) : false;
       return $user;
     }
 
