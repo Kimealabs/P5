@@ -19,7 +19,7 @@ namespace Entities;
       $this->createAt = $createAt;
     }
 
-    public function setPost_id(int $postId) {
+    public function setPostId(int $postId) {
       $this->postId = $postId;
     }
 

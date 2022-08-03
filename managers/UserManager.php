@@ -7,8 +7,8 @@
 
   class UserManager extends Library\Manager {
 
-    public function login(User $userLogin) {
-      if ($this->session->get('token') != $userLogin->getToken()) return false;
+    public function login(User $userLogin, string $token) {
+      if ($this->session->get('token') != $token) return false;
       $req = $this->db->prepare("SELECT * FROM User WHERE email = :email");
       $req->bindValue(":email", $userLogin->getEmail());
       $req->execute();
