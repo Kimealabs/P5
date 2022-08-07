@@ -15,6 +15,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <base href="<?=PATH;?>/" />
         <link href="assets/css/styles.css" rel="stylesheet" />
+        <link href="assets/css/flash.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -29,7 +30,19 @@
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="./">ACCUEIL</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact">Contactez-nous</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signup">INSCRIPTION</a></li>
+                        <?php
+                        if (isset($_SESSION['login'])) {?>
+                           <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signout">SE DECONNECTER</a></li>
+                        <?php
+                        }
+                        else {
+                        ?>
+                          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signup">INSCRIPTION</a></li>
+                          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signin">CONNEXION</a></li>
+                        <?php
+                        }
+                        ?>
+
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="assets/pdf/cv.pdf" target="_blank">Mon CV</a></li>
        
 
@@ -37,6 +50,12 @@
                 </div>
             </div>
         </nav>
+
+        <?php
+            if (isset($flash['type'])) {
+                echo '<div class="flash alert alert-' . $flash['type'] . '" role="alert">' . $flash['message'] . '</div>';
+            }
+        ?>
         <!-- Main Content-->
         <?php
           echo $main;
