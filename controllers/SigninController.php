@@ -30,15 +30,14 @@ class SigninController extends Library\View
       $this->session->set('login', $user->getId());
       $this->session->set('level', $user->getLevel());
       $this->session->delete('token');
-      $this->session->set('flash', ['type' => 'success', 'message' => 'Vous êtes maintenant connecté !']);
+      $this->setFlash('success', 'Vous êtes maintenant connecté !');
       $this->route->redirect('./');
     } else {
       if (isset($_SESSION['login'])) unset($_SESSION['login']);
       $token = $this->session->token();
       $this->setData('token', $token);
-      $this->setData('flash', ['type' => 'danger', 'message' => 'L\'authentification a échoué !']);
-
-      // $this->setData('response', '<div class="alert alert-danger" role="alert">L\'authentification a échoué!</div>');
+      $this->setFlash('danger', 'L\'authentification a échoué !');
+      $this->route->redirect('signin');
     }
     $this->render('signin', 'std');
   }
