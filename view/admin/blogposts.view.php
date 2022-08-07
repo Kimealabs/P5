@@ -1,5 +1,5 @@
 <div class="container">
-    <p class="display-6 text-primary mb-0">LISTE DES BLOGPOSTS</p>
+    <p class="display-5 text-primary mb-0">LISTE DES BLOGPOSTS</p>
     <p class="mt-0 fs-6">Cliquez sur un Blogpost pour le Modifier/Supprimer</p>
     <?php
     foreach ($blogposts as $blogpost) {
