@@ -17,10 +17,6 @@ class IndexController extends Library\View
     $this->setData('userManager', $userManager);
     $this->setData('posts', $posts);
 
-    $flash = $this->session->get('flash') ? $this->session->get('flash') : [];
-    $this->session->delete('flash');
-    $this->setData('flash', $flash);
-
     $this->render('home', 'std');
   }
 }

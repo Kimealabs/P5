@@ -26,10 +26,6 @@ class PostController extends Library\View
       $this->setData('comments', $comments);
       $this->setData('userManager', $userManager);
 
-      $flash = $this->session->get('flash') ? $this->session->get('flash') : [];
-      $this->session->delete('flash');
-      $this->setData('flash', $flash);
-
       $this->render('post', 'std');
     } else {
       $this->route->redirect('404');
@@ -45,7 +41,7 @@ class PostController extends Library\View
       $commentEntity->setPostId($this->session->get('blogpost'));
       $commentManager = new Managers\CommentManager();
       $commentManager->create($commentEntity);
-      $this->session->set('flash', ['type' => 'success', 'message' => 'Le commentaire est posté et en attente de validation !']);
+      $this->setFlash('success', 'Le commentaire est posté et en attente de validation !');
       $this->route->redirect('post/id/' . $this->session->get('blogpost'));
     } else {
       $this->route->redirect('404');
