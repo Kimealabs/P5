@@ -4,21 +4,22 @@
     top: -200px;
     right: 0;
     z-index: 1000;
+    width: auto;
 }
 
 @keyframes flash-animation {
-    30% {
-        top: 50px;
+    20% {
+        top: 0px;
     }
 
     85% {
-        top: 50px;
+        top: 0px;
     }
-    90% {
-        top: 60px;
+    92% {
+        top: 10px;
     }
     95% {
-        top: 65px;
+        top: 25px;
     }
 
     100% {
@@ -26,3 +27,30 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 640px) {
+    .flash {
+      width: 100%;
+    }
+
+    @keyframes flash-animation {
+        20% {
+            top: 50px;
+        }
+    
+        85% {
+            top: 50px;
+        }
+        92% {
+            top: 60px;
+        }
+        95% {
+            top: 85px;
+        }
+    
+        100% {
+            top: -200px;
+            display: none;
+        }
+    }
+  }
