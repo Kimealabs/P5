@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
-  `modified_at` datetime NOT NULL,
+  `modified_at` datetime DEFAULT NULL,
   `title` varchar(100) NOT NULL,
   `chapo` mediumtext NOT NULL,
   `content` longtext NOT NULL,
