@@ -23,8 +23,8 @@ abstract class View
     foreach ($this->data as $key => $value) {
       $$key = $value;
     }
-
     ob_start();
+
     include './view/' . $view . '.view.php';
     $main = ob_get_clean();
     $config = yaml_parse_file('./config.yaml');

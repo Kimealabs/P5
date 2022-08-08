@@ -101,7 +101,7 @@
                             </li>
                             <?php
                             }
-                              if (isset($_SESSION['login']) && $_SESSION['level'] == 1) {
+                              if (isset($_SESSION['login']) && $_SESSION['level'] > 0) {
                                 ?>
                                 <li class="list-inline-item">
                                     <a href="admin">
