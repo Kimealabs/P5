@@ -14,13 +14,22 @@ if (isset($response)) echo $response;
         </div>
         <div class="form-group mt-4">
             <label for="content">Texte</label>
-            <textarea class="form-control" id="content" name="content" rows="10"><?= $blogpost->getContent(); ?></textarea>
+            <textarea class="form-control" id="content" name="content" rows="8"><?= $blogpost->getContent(); ?></textarea>
+        </div>
+        <div class="form-group mt-4">
+            <label for="content">Author</label>
+            <select class="form-select" name="author">
+                <?php
+                foreach ($authors as $author) {
+                    if ($author->getId() == $blogpost->getUserId()) $selected = 'selected';
+                    else $selected = '';
+                    echo '<option value="' . $author->getId() . '" ' . $selected . '>' . $author->getName() . '</option>';
+                }
+                ?>
+            </select>
         </div>
         <div class="d-flex mt-4" style="column-gap:10px">
-            <input type="hidden" name="id" value="<?= $blogpost->getId(); ?>" />
-            <input type="hidden" name="author" value="<?= $blogpost->getUserId(); ?>" />
             <input type="hidden" name="token" value="<?= $token; ?>" />
-
             <button class="btn btn-dark" type="submit" name="action" value="update">MODIFIER</button>
             <button class="btn btn-danger" type="submit" name="action" value="delete">SUPPRIMER</button>
         </div>

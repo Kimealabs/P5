@@ -51,7 +51,6 @@ class AdminController extends Library\View
         $this->security();
         $userManager = new Managers\UserManager();
         $postManager = new Managers\PostManager();
-        $commentManager = new Managers\CommentManager();
         $params = $this->route->getParams();
 
         $blogpost = $postManager->get($params['get']);
@@ -67,10 +66,17 @@ class AdminController extends Library\View
                 if ($params['post']['chapo'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le chapô est obligatoire<br/>';
                 if ($params['post']['content'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le texte est obligatoire<br/>';
                 if ($params['post']['token'] != $this->session->get('token')) $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
-
+                if ($params['post']['author'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
+                else {
+                    $params['post']['userId'] = $params['post']['author'];
+                    $author = $userManager->get($params['post']['userId']);
+                    // TEST LEVEL USER TO UPDATE PERMISSION 
+                    if (!$author || $author->getLevel() == 0) $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
+                }
                 if (!$error) {
+                    // TAKE SESSION['POST'] TO HYDRATE POST ID ENTITY
+                    $params['post']['id'] = $this->session->get('post');
                     $postEntity = new Post($params['post']);
-                    $postEntity->setUserId($this->session->get('login'));
                     $postManager->$method($postEntity);
                     $this->setData('response', '<div class="alert alert-success" role="alert"><i class="fa-solid fa-check"></i> Modifications enregistrées!</div>');
                     $blogpost = $postManager->get($params['get']);
@@ -82,22 +88,22 @@ class AdminController extends Library\View
             }
 
             if ($method == 'delete') {
+                $params['post']['id'] = $this->session->get('post');
                 $postEntity = new Post($params['post']);
-                $postEntity->setUserId($this->session->get('login'));
                 $postManager->delete($postEntity);
-                // $comments = $commentManager->getAll($postEntity->getId());
-                // foreach ($comments as $comment) {
-                //     $commentManager->delete($comment);
-                // }
                 $this->setFlash('success', 'Le Post est effacé !');
                 $this->route->redirect('admin/blogposts');
             }
         }
-        // $blogpost->setChapo(str_replace("<br />", "", $blogpost->getChapo()));
-        // $blogpost->setContent(str_replace("<br />", "", $blogpost->getContent()));
+
+        $authors = $userManager->getAllAdmin();
+
+        $this->setData('authors', $authors);
         $this->setData('blogpost', $blogpost);
         //CREATE AND TAKE TOKEN SESSION
         $token = $this->session->token();
+        //CREATE POST SESSION TO INJECT POST ID FORM
+        $this->session->set('post', $blogpost->getId());
         // TOKEN TO HIDDEN FIELD
         $this->setData('token', $token);
 
@@ -118,7 +124,7 @@ class AdminController extends Library\View
             if ($params['post']['content'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le texte est obligatoire<br/>';
             if ($params['post']['token'] != $this->session->get('token')) $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
             if (!$error) {
-                $params['author'] = $this->session->get('login');
+                $params['userId'] = $this->session->get('login');
                 $postEntity = new Post($params['post']);
                 $postEntity->setUserId($this->session->get('login'));
                 $postManager->create($postEntity);
@@ -156,6 +162,7 @@ class AdminController extends Library\View
         $comments = $commentManager->toValid();
         $this->setData('comments', $comments);
         $this->setData('userManager', $userManager);
+
         //CREATE AND TAKE TOKEN SESSION
         $token = $this->session->token();
         // TOKEN TO HIDDEN FIELD
