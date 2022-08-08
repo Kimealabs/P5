@@ -25,13 +25,13 @@
                 <div class="post-preview">
                     <a href="post/id/<?= $post->getId(); ?>">
                         <h2 class="post-title"><?= $post->getTitle(); ?></h2>
-                        <h3 class="post-subtitle"><?= $post->getChapo(); ?></h3>
+                        <h3 class="post-subtitle"><?= nl2br($post->getChapo()); ?></h3>
                     </a>
                     <p class="post-meta fs-6">
                         <?php
                         $user = $userManager->get($post->getUserId());
                         $date = date("d/m/y \à H:i", strtotime($post->getCreatedAt()));
-                        $modify = !is_null($post->getModifiedAt()) ? ' - modifié le ' . date("d/m/y \à H:i", strtotime($post->getModifiedAt())) : '';
+                        $modify = ($post->getModifiedAt() != '') ? ' - modifié le ' . date("d/m/y \à H:i", strtotime($post->getModifiedAt())) : '';
                         ?>
                         Posté par
                         <b><?= $user->getName(); ?></b>

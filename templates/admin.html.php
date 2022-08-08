@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
-    <meta name="author" content="Patrick Raspijno" />
+    <meta name="author" content="" />
     <title>P5 - blog OCR</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
@@ -16,6 +16,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <base href="<?= PATH; ?>/" />
     <link href="assets/css/styles.css" rel="stylesheet" />
+    <link href="assets/css/flash.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -44,12 +45,22 @@
 
 
     <!-- Main Content-->
-    <div class="container ">
+    <div class="container">
         <div class="row">
             <div class="col-md-1 col-12 bg-dark text-light p-4 d-flex flex-md-column flex-row fs-2 justify-content-md-start justify-content-around align-items-center" style="row-gap:30px">
                 <a href="admin/blogposts" class="text-light" title="Liste des Blogposts"><i class="fa-solid fa-list"></i></a>
+                <a href="admin/comments" class="text-light" title="Commentaires à vérifier" style="position:relative"><i class="fa-solid fa-comments"></i>
+                    <?php
+                    if (isset($commentsToValidate)) {
+                    ?>
+                        <span style="color:#f4fb14;font-size:12px;position:absolute;left:15px;"><i class="fa-solid fa-circle" style="border:2px solid #333;border-radius:100%"></i></span>
+                    <?php
+                    }
+                    ?>
+                </a>
+                <a href="admin/createBlogpost" class="text-light" title="Créer un Blogpost"><i class="fa-solid fa-file-circle-plus"></i></a>
             </div>
-            <div class="col-md-11 col-12 bg-light p-0 p-md-4 pb-5">
+            <div class="col-md-11 col-12 bg-light p-0 p-md-4 pb-5" style="min-height:50vh">
                 <?php
                 echo $main;
                 ?>

@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Library;
 use Managers;
+use Entities\Post;
+use Entities\Comment;
 
 class AdminController extends Library\View
 {
@@ -18,6 +20,9 @@ class AdminController extends Library\View
                 $userManager = new Managers\UserManager();
                 $user = $userManager->get($user->getId());
                 $this->setData('user', $user);
+                $commentManager = new Managers\CommentManager();
+                $commentsToValidate = $commentManager->toValid();
+                if (count($commentsToValidate) > 0)  $this->setData('commentsToValidate', $commentsToValidate);
                 return true;
             }
         } else {
@@ -39,5 +44,130 @@ class AdminController extends Library\View
     public function blogposts()
     {
         $this->default();
+    }
+
+    public function blogpost()
+    {
+        $this->security();
+        $userManager = new Managers\UserManager();
+        $postManager = new Managers\PostManager();
+        $params = $this->route->getParams();
+
+        $blogpost = $postManager->get($params['get']);
+        if (!$blogpost) $this->route->redirect('404');
+
+        if (!empty($params['post']) && $params['post']['token'] == $this->session->get('token')) {
+            $method = $params['post']['action'];
+            if ($method != 'delete' && $method != 'update') $this->route->redirect('404');
+
+            if ($method == 'update') {
+                $error = false;
+                if ($params['post']['title'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le titre est obligatoire<br/>';
+                if ($params['post']['chapo'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le chapô est obligatoire<br/>';
+                if ($params['post']['content'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le texte est obligatoire<br/>';
+                if ($params['post']['token'] != $this->session->get('token')) $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
+                if ($params['post']['author'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
+                else {
+                    $params['post']['userId'] = $params['post']['author'];
+                    $author = $userManager->get($params['post']['userId']);
+                    // TEST LEVEL USER TO UPDATE PERMISSION 
+                    if (!$author || $author->getLevel() == 0) $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
+                }
+                if (!$error) {
+                    // TAKE SESSION['POST'] TO HYDRATE POST ID ENTITY
+                    $params['post']['id'] = $this->session->get('post');
+                    $postEntity = new Post($params['post']);
+                    $postManager->$method($postEntity);
+                    $this->setData('response', '<div class="alert alert-success" role="alert"><i class="fa-solid fa-check"></i> Modifications enregistrées!</div>');
+                    $blogpost = $postManager->get($params['get']);
+                    $this->setFlash('success', 'Mise à jour effectuée !');
+                    $this->route->redirect('admin/blogpost/' . $blogpost->getId());
+                } else {
+                    $this->setData('response', $error);
+                }
+            }
+
+            if ($method == 'delete') {
+                $params['post']['id'] = $this->session->get('post');
+                $postEntity = new Post($params['post']);
+                $postManager->delete($postEntity);
+                $this->setFlash('success', 'Le Post est effacé !');
+                $this->route->redirect('admin/blogposts');
+            }
+        }
+
+        $authors = $userManager->getAllAdmin();
+
+        $this->setData('authors', $authors);
+        $this->setData('blogpost', $blogpost);
+        //CREATE AND TAKE TOKEN SESSION
+        $token = $this->session->token();
+        //CREATE POST SESSION TO INJECT POST ID FORM
+        $this->session->set('post', $blogpost->getId());
+        // TOKEN TO HIDDEN FIELD
+        $this->setData('token', $token);
+
+        $this->render('admin/blogpost', 'admin');
+    }
+
+
+    public function createBlogpost()
+    {
+        $this->security();
+        $postManager = new Managers\PostManager();
+        $params = $this->route->getParams();
+
+        $error = false;
+        if (!empty($params['post'])) {
+            if ($params['post']['title'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le titre est obligatoire<br/>';
+            if ($params['post']['chapo'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le chapô est obligatoire<br/>';
+            if ($params['post']['content'] == '') $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Le texte est obligatoire<br/>';
+            if ($params['post']['token'] != $this->session->get('token')) $error .= '<i class="fa-solid fa-circle-exclamation text-danger"></i> Erreur réseau, désolé !<br/>';
+            if (!$error) {
+                $params['userId'] = $this->session->get('login');
+                $postEntity = new Post($params['post']);
+                $postEntity->setUserId($this->session->get('login'));
+                $postManager->create($postEntity);
+                $this->setFlash('success', 'Le post est publié !');
+                $this->route->redirect('admin/blogposts');
+            } else {
+                $this->setData('response', $error);
+            }
+        }
+        //CREATE AND TAKE TOKEN SESSION
+        $token = $this->session->token();
+        // TOKEN TO HIDDEN FIELD
+        $this->setData('token', $token);
+
+        $this->render('admin/create', 'admin');
+    }
+
+
+    public function comments()
+    {
+        $this->security();
+        $userManager = new Managers\UserManager();
+        $postManager = new Managers\PostManager();
+        $commentManager = new Managers\CommentManager();
+
+        $params = $this->route->getParams();
+        if (!empty($params['post']) && $params['post']['token'] == $this->session->get('token')) {
+            $commentEntity = new Comment($params['post']);
+            $commentManager->update($commentEntity);
+            if ($commentEntity->getStatus() == 1) $this->setFlash('success', 'Le commentaire est publié !');
+            else $this->setFlash('success', 'Commentaire supprimé !');
+            $this->route->redirect('admin/comments');
+        }
+
+        $comments = $commentManager->toValid();
+        $this->setData('comments', $comments);
+        $this->setData('userManager', $userManager);
+
+        //CREATE AND TAKE TOKEN SESSION
+        $token = $this->session->token();
+        // TOKEN TO HIDDEN FIELD
+        $this->setData('token', $token);
+
+        $this->render('admin/comments', 'admin');
     }
 }
