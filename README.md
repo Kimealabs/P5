@@ -7,6 +7,7 @@ The goal about to create a blog system with administration (create/delete/editin
 
 Bootstrap theme : Start Bootstrap - Clean Blog v6.0.8 (https://startbootstrap.com/theme/clean-blog)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ca81c3a410df40c2b895763aecfeb1bc)](https://www.codacy.com/gh/Kimealabs/P5/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kimealabs/P5&amp;utm_campaign=Badge_Grade)
 
 ## NOTE TO INSTALL
 Copy all or clone (git) repository to your web local server
