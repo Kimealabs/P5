@@ -23,7 +23,6 @@ class Factory
     } else {
       $noWhere = new Controllers\Code404Controller($route, $session);
       $noWhere->default();
-      exit;
     }
   }
 }

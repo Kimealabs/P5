@@ -28,7 +28,7 @@
         <?= nl2br($post->getContent()); ?>
       </div>
       <?php
-      if (!isset($_SESSION['login'])) {
+      if (!$this->session->get('login')) {
       ?>
         <hr />
         <div class="col-md-10 col-lg-8 col-xl-7">
@@ -55,8 +55,8 @@
       }
 
       if ($comments) {
-        echo '<hr /><div class="col-md-10 col-lg-8 col-xl-7 mb-5">';
-        echo "<p>Commentaires</p>";
+        print_r('<hr /><div class="col-md-10 col-lg-8 col-xl-7 mb-5">');
+        print_r('<p>Commentaires</p>');
         foreach ($comments as $comment) {
           $user = $userManager->get($comment->getUserId());
           $content = nl2br($comment->getContent());
@@ -68,7 +68,7 @@
                               </div>
 HTML;
         }
-        echo '</div>';
+        print_r('</div>');
       }
       ?>
     </div>

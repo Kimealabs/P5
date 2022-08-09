@@ -33,7 +33,7 @@ class SigninController extends Library\View
       $this->setFlash('success', 'Vous êtes maintenant connecté !');
       $this->route->redirect('./');
     } else {
-      if (isset($_SESSION['login'])) unset($_SESSION['login']);
+      if ($this->session->get('login')) $this->session->delete('login');
       $token = $this->session->token();
       $this->setData('token', $token);
       $this->setFlash('danger', 'L\'authentification a échoué !');

@@ -46,7 +46,7 @@ class Post extends Entity
 
   public function getTitle()
   {
-    return (string) html_entity_decode($this->title);
+    return (string) $this->title;
   }
 
   public function getChapo()
