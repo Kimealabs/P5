@@ -1,4 +1,7 @@
 ## CREATE YOUR FIRST BLOG WITH PHP
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1139c936a35a4a3fa3d502b6b6b1ae02)](https://app.codacy.com/gh/Kimealabs/P5?utm_source=github.com&utm_medium=referral&utm_content=Kimealabs/P5&utm_campaign=Badge_Grade_Settings)
+
 ![alt text](https://www.php.net//images/logos/php-med-trans-light.gif)
 
 This is a project for my formation on OpenClassRooms (number 5)
