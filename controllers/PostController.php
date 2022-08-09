@@ -39,10 +39,15 @@ class PostController extends Library\View
       $commentEntity = new Entities\Comment($params['post']);
       $commentEntity->setUserId($this->session->get('login'));
       $commentEntity->setPostId($this->session->get('blogpost'));
-      $commentManager = new Managers\CommentManager();
-      $commentManager->create($commentEntity);
-      $this->setFlash('success', 'Le commentaire est posté et en attente de validation !');
-      $this->route->redirect('post/id/' . $this->session->get('blogpost'));
+      if ($commentEntity->getContent == '') {
+        $this->setFlash('danger', 'Un commentaire ne peut être vide !');
+        $this->route->redirect('post/id/' . $this->session->get('blogpost'));
+      } else {
+        $commentManager = new Managers\CommentManager();
+        $commentManager->create($commentEntity);
+        $this->setFlash('success', 'Le commentaire est posté et en attente de validation !');
+        $this->route->redirect('post/id/' . $this->session->get('blogpost'));
+      }
     } else {
       $this->route->redirect('404');
     }

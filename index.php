@@ -1,17 +1,11 @@
 <?php
 
-  error_reporting(E_ALL);
-  ini_set("display_errors", 1);
+$loader = require_once __DIR__ . '/vendor/autoload.php';
 
-  $loader = require __DIR__ . '/vendor/autoload.php';
+if (!defined('PATH')) {
 
-  $path = $_SERVER["PHP_SELF"];
+  define('PATH', 'localhost');
+}
 
-  if (!defined('PATH')) {
-
-      define('PATH', 'localhost');
-
-  }
-
-  $route = new Library\Router();
-  $ctrl = new Library\Factory($route);
+$route = new Library\Router();
+$ctrl = new Library\Factory($route);

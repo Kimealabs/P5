@@ -9,47 +9,43 @@
 
 @keyframes flash-animation {
     20% {
-        top: 0px;
+        top: 0;
     }
-
     85% {
-        top: 0px;
+        top: 0;
     }
     92% {
-        top: 10px;
+        top: 10;
     }
     95% {
-        top: 25px;
+        top: 25;
     }
-
     100% {
-        top: -200px;
+        top: -200;
         display: none;
     }
 }
-
 @media screen and (max-width: 640px) {
     .flash {
       width: 100%;
     }
 
-    @keyframes flash-animation {
+    @keyframes flash-animation
+    {
         20% {
-            top: 50px;
+            top: 50;
         }
-    
         85% {
-            top: 50px;
+            top: 50;
         }
         92% {
-            top: 60px;
+            top: 60;
         }
         95% {
-            top: 85px;
+            top: 85;
         }
-    
         100% {
-            top: -200px;
+            top: -200;
             display: none;
         }
     }

@@ -25,12 +25,11 @@ abstract class View
     }
     ob_start();
 
-    include './view/' . $view . '.view.php';
+    require_once './view/' . $view . '.view.php';
     $main = ob_get_clean();
     $config = yaml_parse_file('./config.yaml');
     $socialNetworks = $config['socialNetworks'];
-    include './templates/' . $template . '.html.php';
-    exit;
+    require_once './templates/' . $template . '.html.php';
   }
 
   public function setData($key, $value)
