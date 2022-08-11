@@ -1,3 +1,9 @@
+<?php
+
+use Library\Session;
+
+$session = Session::getInstance();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,7 +105,7 @@
                             </a>
                         </li>
                         <?php
-                        if (isset($_SESSION['login']) && $_SESSION['level'] > 0) {
+                        if ($session->get('level') > 0) {
                         ?>
                             <li class="list-inline-item">
                                 <a href="admin">

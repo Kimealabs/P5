@@ -2,15 +2,15 @@
 
 namespace Controllers;
 
-use Library;
+use Library\AbstractController;
 
-class SignoutController extends Library\View
+class SignoutController extends AbstractController
 {
 
-  public function default()
+  public function default(): void
   {
     $this->session->signout();
-    $this->setFlash('primary', 'Vous êtes Déconnecté !');
+    $this->view->setFlash('primary', 'Vous êtes Déconnecté !');
     $this->route->redirect('./');
   }
 }

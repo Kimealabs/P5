@@ -20,41 +20,41 @@ final class Session
     return self::$instance;
   }
 
-  public function token()
+  public function token(): string
   {
     $token = uniqid('', true);
     $this->set('token', $token);
     return $token;
   }
 
-  public function set(string $key, $value)
+  public function set(string $key, $value): void
   {
     $_SESSION[$key] = $value;
   }
 
-  public function get(string $key)
+  public function get(string $key): array|string|bool
   {
-    if (isset($_SESSION[$key])) return $_SESSION[$key];
-    else return false;
+    return (isset($_SESSION[$key])) ? $_SESSION[$key] : false;
   }
 
-  public function delete(string $key)
+  public function delete(string $key): void
   {
-    if (isset($_SESSION[$key])) unset($_SESSION[$key]);
+    unset($_SESSION[$key]);
   }
 
-  public function __clone()
+  public function __clone(): void
   {
     throw new \Exception('Cet objet ne peut pas être cloné');
   }
 
-  public function __wakeup()
+  public function __wakeup(): void
   {
     throw new Exception('Cet objet ne peut pas être désérialisé');
   }
 
-  public function signout()
+  public function signout(): void
   {
     $this->delete('login');
+    $this->delete('level');
   }
 }

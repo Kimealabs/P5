@@ -1,15 +1,15 @@
 <?php
 
-  namespace Controllers;
+namespace Controllers;
 
-  use Library;
+use Library\AbstractController;
 
-  class Code404Controller extends Library\View {
+class Code404Controller extends AbstractController
+{
 
-    public function default() {
-      $this->setData('route', $this->route);
-      $this->render('code404', 'std');
-
+  public function default(): void
+  {
+    $this->view->setData('route', $this->route);
+    $this->view->render('code404', 'std');
   }
-  }
-
+}

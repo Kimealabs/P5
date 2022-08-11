@@ -2,15 +2,15 @@
 
 namespace Controllers;
 
-use Library;
 use Managers;
 use Entities\Post;
 use Entities\Comment;
+use Library\AbstractController;
 
-class AdminController extends Library\View
+class AdminController extends AbstractController
 {
 
-    private function security()
+    private function security(): void
     {
         if ($this->session->get('login')) {
             $userManager = new Managers\UserManager();
@@ -19,34 +19,33 @@ class AdminController extends Library\View
             else {
                 $userManager = new Managers\UserManager();
                 $user = $userManager->get($user->getId());
-                $this->setData('user', $user);
+                $this->view->setData('user', $user);
                 $commentManager = new Managers\CommentManager();
                 $commentsToValidate = $commentManager->toValid();
-                if (count($commentsToValidate) > 0)  $this->setData('commentsToValidate', $commentsToValidate);
-                return true;
+                if (count($commentsToValidate) > 0)  $this->view->setData('commentsToValidate', $commentsToValidate);
             }
         } else {
             $this->route->redirect('404');
         }
     }
 
-    public function default()
+    public function default(): void
     {
         $this->security();
         $userManager = new Managers\UserManager();
         $postManager = new Managers\PostManager();
         $blogposts = $postManager->getAll();
-        $this->setData('blogposts', $blogposts);
-        $this->setData('userManager', $userManager);
-        $this->render('admin/blogposts', 'admin');
+        $this->view->setData('blogposts', $blogposts);
+        $this->view->setData('userManager', $userManager);
+        $this->view->render('admin/blogposts', 'admin');
     }
 
-    public function blogposts()
+    public function blogposts(): void
     {
         $this->default();
     }
 
-    public function blogpost()
+    public function blogpost(): void
     {
         $this->security();
         $userManager = new Managers\UserManager();
@@ -77,13 +76,14 @@ class AdminController extends Library\View
                     // TAKE SESSION['POST'] TO HYDRATE POST ID ENTITY
                     $params['post']['id'] = $this->session->get('post');
                     $postEntity = new Post($params['post']);
+                    $postEntity->setId($blogpost->getId());
                     $postManager->$method($postEntity);
-                    $this->setData('response', '<div class="alert alert-success" role="alert"><i class="fa-solid fa-check"></i> Modifications enregistrées!</div>');
+                    $this->view->setData('response', '<div class="alert alert-success" role="alert"><i class="fa-solid fa-check"></i> Modifications enregistrées!</div>');
                     $blogpost = $postManager->get($params['get']);
-                    $this->setFlash('success', 'Mise à jour effectuée !');
+                    $this->view->setFlash('success', 'Mise à jour effectuée !');
                     $this->route->redirect('admin/blogpost/' . $blogpost->getId());
                 } else {
-                    $this->setData('response', $error);
+                    $this->view->setData('response', $error);
                 }
             }
 
@@ -91,27 +91,27 @@ class AdminController extends Library\View
                 $params['post']['id'] = $this->session->get('post');
                 $postEntity = new Post($params['post']);
                 $postManager->delete($postEntity);
-                $this->setFlash('success', 'Le Post est effacé !');
+                $this->view->setFlash('success', 'Le Post est effacé !');
                 $this->route->redirect('admin/blogposts');
             }
         }
 
         $authors = $userManager->getAllAdmin();
 
-        $this->setData('authors', $authors);
-        $this->setData('blogpost', $blogpost);
+        $this->view->setData('authors', $authors);
+        $this->view->setData('blogpost', $blogpost);
         //CREATE AND TAKE TOKEN SESSION
         $token = $this->session->token();
         //CREATE POST SESSION TO INJECT POST ID FORM
         $this->session->set('post', $blogpost->getId());
         // TOKEN TO HIDDEN FIELD
-        $this->setData('token', $token);
+        $this->view->setData('token', $token);
 
-        $this->render('admin/blogpost', 'admin');
+        $this->view->render('admin/blogpost', 'admin');
     }
 
 
-    public function createBlogpost()
+    public function createBlogpost(): void
     {
         $this->security();
         $postManager = new Managers\PostManager();
@@ -128,22 +128,22 @@ class AdminController extends Library\View
                 $postEntity = new Post($params['post']);
                 $postEntity->setUserId($this->session->get('login'));
                 $postManager->create($postEntity);
-                $this->setFlash('success', 'Le post est publié !');
+                $this->view->setFlash('success', 'Le post est publié !');
                 $this->route->redirect('admin/blogposts');
             } else {
-                $this->setData('response', $error);
+                $this->view->setData('response', $error);
             }
         }
         //CREATE AND TAKE TOKEN SESSION
         $token = $this->session->token();
         // TOKEN TO HIDDEN FIELD
-        $this->setData('token', $token);
+        $this->view->setData('token', $token);
 
-        $this->render('admin/create', 'admin');
+        $this->view->render('admin/create', 'admin');
     }
 
 
-    public function comments()
+    public function comments(): void
     {
         $this->security();
         $userManager = new Managers\UserManager();
@@ -154,20 +154,20 @@ class AdminController extends Library\View
         if (!empty($params['post']) && $params['post']['token'] == $this->session->get('token')) {
             $commentEntity = new Comment($params['post']);
             $commentManager->update($commentEntity);
-            if ($commentEntity->getStatus() == 1) $this->setFlash('success', 'Le commentaire est publié !');
-            else $this->setFlash('success', 'Commentaire supprimé !');
+            if ($commentEntity->getStatus() == 1) $this->view->setFlash('success', 'Le commentaire est publié !');
+            else $this->view->setFlash('success', 'Commentaire supprimé !');
             $this->route->redirect('admin/comments');
         }
 
         $comments = $commentManager->toValid();
-        $this->setData('comments', $comments);
-        $this->setData('userManager', $userManager);
+        $this->view->setData('comments', $comments);
+        $this->view->setData('userManager', $userManager);
 
         //CREATE AND TAKE TOKEN SESSION
         $token = $this->session->token();
         // TOKEN TO HIDDEN FIELD
-        $this->setData('token', $token);
+        $this->view->setData('token', $token);
 
-        $this->render('admin/comments', 'admin');
+        $this->view->render('admin/comments', 'admin');
     }
 }

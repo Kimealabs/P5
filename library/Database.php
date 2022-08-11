@@ -19,7 +19,7 @@ final class Database
   }
 
 
-  final public static function getInstance()
+  final public static function getInstance(): Database
   {
     if (!(self::$instance instanceof self)) {
       self::$instance = new self();
@@ -27,17 +27,17 @@ final class Database
     return self::$instance;
   }
 
-  public function __clone()
+  public function __clone(): void
   {
     throw new \Exception('Cet objet ne peut pas être cloné');
   }
 
-  public function __wakeup()
+  public function __wakeup(): void
   {
     throw new Exception('Cet objet ne peut pas être désérialisé');
   }
 
-  public function pdo()
+  public function pdo(): \PDO
   {
     return $this->pdo;
   }
