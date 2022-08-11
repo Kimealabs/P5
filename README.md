@@ -18,7 +18,9 @@ Copy all or clone (git) repository to your web local server
 - Modify Config file config.yaml
 
 #Important :
+
 1/ You may become an user to Administrator easily : SignUp and update Level field on User Table to 1
+
 2/ Use Apache server (htaccess)
 
 Don't forget to verify your PHP setting for YAML support :
