@@ -2,21 +2,21 @@
 
 namespace Controllers;
 
-use Library;
+use Library\AbstractController;
 use Managers;
 
-class IndexController extends Library\View
+class IndexController extends AbstractController
 {
 
-  public function default()
+  public function default(): void
   {
-    $this->setData('message', 'Bienvenue à tous<br/>');
+    $this->view->setData('message', 'Bienvenue à tous<br/>');
     $postManager = new Managers\PostManager();
     $userManager = new Managers\UserManager();
     $posts = $postManager->getAll(2);
-    $this->setData('userManager', $userManager);
-    $this->setData('posts', $posts);
+    $this->view->setData('userManager', $userManager);
+    $this->view->setData('posts', $posts);
 
-    $this->render('home', 'std');
+    $this->view->render('home', 'std');
   }
 }

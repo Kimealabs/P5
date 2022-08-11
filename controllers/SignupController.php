@@ -2,14 +2,14 @@
 
 namespace Controllers;
 
-use Library;
-use Managers;
 use Entities;
+use Managers;
+use Library\AbstractController;
 
-class SignupController extends Library\View
+class SignupController extends AbstractController
 {
 
-  public function default()
+  public function default(): void
   {
     $userManager = new Managers\UserManager();
     $params = $this->route->getParams();
@@ -49,16 +49,16 @@ class SignupController extends Library\View
         $this->session->set('flash', ['type' => 'success', 'message' => '<i class="fa-solid fa-hands-clapping text-success"></i> Votre inscription est validée !<br/><br/>Vous pouvez vous connecter et commenter !']);
         $this->route->redirect('./');
       } else {
-        $this->setData('response', $error);
+        $this->view->setData('response', $error);
       }
     }
-    $this->setData('name', $name);
-    $this->setData('email', $email);
-    $this->setData('password', '');
+    $this->view->setData('name', $name);
+    $this->view->setData('email', $email);
+    $this->view->setData('password', '');
     //CREATE AND TAKE TOKEN SESSION
     $token = $this->session->token();
     // TOKEN TO HIDDEN FIELD
-    $this->setData('token', $token);
-    $this->render('signup', 'std');
+    $this->view->setData('token', $token);
+    $this->view->render('signup', 'std');
   }
 }

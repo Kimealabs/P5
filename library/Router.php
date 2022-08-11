@@ -21,27 +21,27 @@ class Router
     $this->params['post'] = isset($_POST) ? filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : [];
   }
 
-  public function getController()
+  public function getController(): string
   {
     return $this->controller;
   }
 
-  public function getAction()
+  public function getAction(): string
   {
     return $this->action;
   }
 
-  public function getParams()
+  public function getParams(): array
   {
     return $this->params;
   }
 
-  public function setParams($value)
+  public function setParams($value): void
   {
     $this->params = $value;
   }
 
-  public function redirect($url)
+  public function redirect($url): void
   {
     header('Location: ' . PATH . '/' . $url);
   }

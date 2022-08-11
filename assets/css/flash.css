@@ -7,46 +7,50 @@
     width: auto;
 }
 
-@keyframes flash-animation {
+@keyframes flash-animation
+{
     20% {
-        top: 0;
+        top: 0px;
     }
     85% {
-        top: 0;
+        top: 0px;
     }
     92% {
-        top: 10;
+        top: 10px;
     }
     95% {
-        top: 25;
+        top: 25px;
     }
     100% {
-        top: -200;
+        top: -200px;
         display: none;
     }
 }
-@media screen and (max-width: 640px) {
+
+
+@media screen and (max-width: 640px ) {
     .flash {
       width: 100%;
+      animation: flash-animation-mobile 3.5s;
     }
-
-    @keyframes flash-animation
+    @keyframes flash-animation-mobile
     {
         20% {
-            top: 50;
+            top: 50px;
         }
         85% {
-            top: 50;
+            top: 50px;
         }
         92% {
-            top: 60;
+            top: 65px;
         }
         95% {
-            top: 85;
+            top: 85px;
         }
         100% {
-            top: -200;
+            top: -200px;
             display: none;
         }
     }
-  }
+
+}

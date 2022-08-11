@@ -12,17 +12,18 @@ class Factory
     $controller = ucfirst(strtolower($route->getController()));
     $classController = 'Controllers\\' . $controller . "Controller";
     $session = Session::getInstance();
+    $view = new View($session);
     if (class_exists($classController)) {
-      // classController Parent is View => construct (Router, Session)
-      $controllerView = new $classController($route, $session);
+      // classController Parent is abstractController => construct (Router, Session, View)
+      $controllerView = new $classController($route, $session, $view);
     }
 
     if (method_exists($classController, $route->getAction())) {
       $action = $route->getAction();
       $controllerView->$action();
-    } else {
-      $noWhere = new Controllers\Code404Controller($route, $session);
-      $noWhere->default();
     }
+
+    $noWhere = new Controllers\Code404Controller($route, $session, $view);
+    $noWhere->default();
   }
 }

@@ -2,22 +2,21 @@
 
 namespace Library;
 
-abstract class View
+class View
 {
 
   private $data = array();
   protected $session;
-  protected $route;
 
-  public function __construct(Router $route, Session $session)
+
+  public function __construct(Session $session)
   {
     $this->session = $session;
-    $this->route = $route;
     $flash = $this->getFlash();
     $this->setData('flash', $flash);
   }
 
-  public function render($view, $template)
+  public function render($view, $template): void
   {
     if ($view == '') $view = 'index';
     foreach ($this->data as $key => $value) {
@@ -30,9 +29,10 @@ abstract class View
     $config = yaml_parse_file('./config.yaml');
     $socialNetworks = $config['socialNetworks'];
     require_once './templates/' . $template . '.html.php';
+    exit();
   }
 
-  public function setData($key, $value)
+  public function setData($key, $value): void
   {
     $this->data[$key] = $value;
   }

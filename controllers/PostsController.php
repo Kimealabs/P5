@@ -2,20 +2,20 @@
 
 namespace Controllers;
 
-use Library;
 use Managers;
+use Library\AbstractController;
 
-class PostsController extends Library\View
+class PostsController extends AbstractController
 {
 
-  public function default()
+  public function default(): void
   {
-    $this->setData('message', 'Bienvenue à tous<br/>');
+    $this->view->setData('message', 'Bienvenue à tous<br/>');
     $postManager = new Managers\PostManager();
     $userManager = new Managers\UserManager();
     $posts = $postManager->getAll();
-    $this->setData('userManager', $userManager);
-    $this->setData('posts', $posts);
-    $this->render('posts', 'std');
+    $this->view->setData('userManager', $userManager);
+    $this->view->setData('posts', $posts);
+    $this->view->render('posts', 'std');
   }
 }
