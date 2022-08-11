@@ -23,6 +23,8 @@ Copy all or clone (git) repository to your web local server
 
 2/ Use Apache server (htaccess)
 
+3/ Change in index.php => define('PATH', 'localhost'); ->Change localhost by your PATH in URI (empty if root)
+
 Don't forget to verify your PHP setting for YAML support :
 
 - php.ini entry is: extension=php_yaml
