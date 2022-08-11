@@ -55,5 +55,6 @@ final class Session
   public function signout(): void
   {
     $this->delete('login');
+    $this->delete('level');
   }
 }

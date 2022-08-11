@@ -1,3 +1,9 @@
+<?php
+
+use Library\Session;
+
+$session = Session::getInstance();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +39,7 @@
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="./">ACCUEIL</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact">Contactez-nous</a></li>
                     <?php
-                    if (isset($_SESSION['login'])) { ?>
+                    if ($session->get('login')) { ?>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signout">SE DECONNECTER</a></li>
                     <?php
                     } else {
@@ -104,7 +110,7 @@
                             </li>
                         <?php
                         }
-                        if (isset($_SESSION['login']) && $_SESSION['level'] > 0) {
+                        if ($session->get('level') > 0) {
                         ?>
                             <li class="list-inline-item">
                                 <a href="admin">
