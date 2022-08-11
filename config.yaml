@@ -1,6 +1,6 @@
 projet: P5-Blog-OCR
 author: kimealabs
-email: 'kimealabs@gmail.com'
+email: 'yourEmailForContactPage@domain.ext'
 env: 'dev'
 path: 'https://localhost/'
 socialNetworks:
