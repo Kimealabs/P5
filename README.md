@@ -30,7 +30,7 @@ Sign up : /user/signup
 
 WAMP V3.2.9 - PHP 8.1.0 (YAML ext.) - MySQL 5.7.36 - Apache 2.4.51 - PHPmyAdmin 5.2.0
 
-# EDIT WITH VSCODE v1.70.2
+### EDIT WITH VSCODE v1.70.2
 
 #Important :
 
