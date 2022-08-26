@@ -24,7 +24,7 @@ if (isset($flash['type'])) {
       <?php
       if (isset($response)) echo $response;
       ?>
-      <form autocomplete="off" action="signin/connect" method="POST">
+      <form autocomplete="off" action="user/connect" method="POST">
         <div class="input-group input-group-lg mb-3">
           <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-at"></i></span>
           <input type="text" autocomplete="off" class="form-control" name="email" placeholder="Adresse email" aria-label="Username" aria-describedby="basic-addon1">

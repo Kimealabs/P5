@@ -2,6 +2,7 @@
 
 namespace Library;
 
+// CALLED INDIRECTECTLY BY LEGACY OF ALL "controllers"
 abstract class AbstractController
 {
     protected $view;

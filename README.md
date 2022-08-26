@@ -17,13 +17,26 @@ Copy all or clone (git) repository to your web local server
 - Use db.sql FILE on Diagrams to construct Database
 - Modify Config file config.yaml
 
+## ROUTES
+
+Examples
+home : /
+list all posts : /post/list
+read a post : /post/id/{id}
+Sign in : /user/signin
+Sign up : /user/signup
+
+## TESTED ENV.
+
+WAMP V3.2.9 - PHP 8.1.0 (YAML ext.) - MySQL 5.7.36 - Apache 2.4.51 - PHPmyAdmin 5.2.0
+
+# EDIT WITH VSCODE v1.70.2
+
 #Important :
 
 1/ You may become an user to Administrator easily : SignUp and update Level field on User Table to 1
 
 2/ Use Apache server (htaccess)
-
-3/ Change in index.php => define('PATH', 'localhost'); ->Change localhost by your PATH in URI (empty if root)
 
 Don't forget to verify your PHP setting for YAML support :
 

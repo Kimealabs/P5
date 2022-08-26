@@ -7,7 +7,7 @@ use Managers;
 
 class IndexController extends AbstractController
 {
-
+  // HOME PAGE CONTROLLER (DEFAULT = EMPTY ACTION ON ROUTE OBJECT)
   public function default(): void
   {
     $this->view->setData('message', 'Bienvenue à tous<br/>');

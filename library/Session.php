@@ -2,6 +2,7 @@
 
 namespace Library;
 
+//SINGLETON PATTERN FOR USE ONE TIME AND UNIQUE ONE TIME
 final class Session
 {
 

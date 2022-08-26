@@ -8,7 +8,7 @@ use Library\AbstractController;
 
 class PostController extends AbstractController
 {
-
+  // SHOW POST (id) by URL /post/id/{id}
   public function id(): void
   {
     $postManager = new Managers\PostManager();
@@ -31,6 +31,7 @@ class PostController extends AbstractController
     $this->route->redirect('404');
   }
 
+  // ADD COMMENT METHOD WITH CONTROL FORM, REDIRECT TO /post/id/{id} Page
   public function addComment(): void
   {
     if ($this->session->get('login')) {
@@ -50,5 +51,17 @@ class PostController extends AbstractController
     } else {
       $this->route->redirect('404');
     }
+  }
+
+  // LIST ALL POSTS => /post/list/
+  public function list(): void
+  {
+    $this->view->setData('message', 'Bienvenue à tous<br/>');
+    $postManager = new Managers\PostManager();
+    $userManager = new Managers\UserManager();
+    $posts = $postManager->getAll();
+    $this->view->setData('userManager', $userManager);
+    $this->view->setData('posts', $posts);
+    $this->view->render('posts', 'std');
   }
 }

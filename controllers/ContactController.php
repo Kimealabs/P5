@@ -16,6 +16,7 @@ class ContactController extends AbstractController
     $this->view->render('contact', 'std');
   }
 
+  // METHOD TO CONTROL CONTACT FORM, IF OK => SEND EMAIL, ELSE => SHOW ERROR MESSAGE
   public function send(): void
   {
     $params = $this->route->getParams();

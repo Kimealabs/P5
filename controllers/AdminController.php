@@ -9,7 +9,7 @@ use Library\AbstractController;
 
 class AdminController extends AbstractController
 {
-
+    // TEST IF SESSION LOGIN EXIST AND USER LEVEL > 0 ELSE => 404
     private function security(): void
     {
         if ($this->session->get('login')) {
@@ -29,6 +29,7 @@ class AdminController extends AbstractController
         }
     }
 
+    //IF EMPTY ACTION ON ROUTE OBJECT => DEFAULT
     public function default(): void
     {
         $this->security();
@@ -40,11 +41,13 @@ class AdminController extends AbstractController
         $this->view->render('admin/blogposts', 'admin');
     }
 
+    // SHOW ALL POSTS
     public function blogposts(): void
     {
         $this->default();
     }
 
+    // UPDATE POST PAGE
     public function blogpost(): void
     {
         $this->security();
@@ -110,7 +113,7 @@ class AdminController extends AbstractController
         $this->view->render('admin/blogpost', 'admin');
     }
 
-
+    // CREATE POST PAGE
     public function createBlogpost(): void
     {
         $this->security();
@@ -142,7 +145,7 @@ class AdminController extends AbstractController
         $this->view->render('admin/create', 'admin');
     }
 
-
+    // LIST COMMENT(s) TO VALIDATE AND ALSO (IF ACTION BY BUTTON) => UPDATE STATUS COMMENT TO 1 (VALID) OR 2 (ARCHIVE, considered like deleted)
     public function comments(): void
     {
         $this->security();

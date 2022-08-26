@@ -40,12 +40,12 @@ $session = Session::getInstance();
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact">Contactez-nous</a></li>
                     <?php
                     if ($session->get('login')) { ?>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signout">SE DECONNECTER</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="user/signout">SE DECONNECTER</a></li>
                     <?php
                     } else {
                     ?>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signup">INSCRIPTION</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signin">CONNEXION</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="user/signup">INSCRIPTION</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="user/signin">CONNEXION</a></li>
                     <?php
                     }
                     ?>

@@ -2,6 +2,7 @@
 
 namespace Library;
 
+//SINGLETON PATTERN, ONE CONNECTION FOR ALL REQUEST
 final class Database
 {
 

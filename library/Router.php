@@ -9,6 +9,7 @@ class Router
   private $action;
   private $params = array();
 
+  // EXPLODE URL TO CONTROLLER - ACTION - PARAMS[get, post] / WITH SECURITY FILTERS
   public function __construct()
   {
     $route = ['index', 'default'];
