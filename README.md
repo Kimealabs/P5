@@ -19,20 +19,25 @@ Copy all or clone (git) repository to your web local server
 
 ## ROUTES
 
-Examples
+Examples :
+
 home : /
+
 list all posts : /post/list
+
 read a post : /post/id/{id}
+
 Sign in : /user/signin
+
 Sign up : /user/signup
 
 ## TESTED ENV.
 
 WAMP V3.2.9 - PHP 8.1.0 (YAML ext.) - MySQL 5.7.36 - Apache 2.4.51 - PHPmyAdmin 5.2.0
 
-### EDIT WITH VSCODE v1.70.2
+EDIT WITH VSCODE v1.70.2
 
-#Important :
+## Important :
 
 1/ You may become an user to Administrator easily : SignUp and update Level field on User Table to 1
 
